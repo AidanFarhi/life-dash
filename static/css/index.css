@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+nav {
+    background-color: rgba(45, 45, 255, 0.695);
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#main-content {
+    grid-column-start: 3;
+    grid-column-end: -1;
+}

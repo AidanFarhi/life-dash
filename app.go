@@ -11,20 +11,20 @@ import (
 func main() {
 
 	tmpl, err := template.ParseFiles(
-		"templates/layout.html",
-		"templates/pages/home.html",
+		"templates/pages/index.html",
 		"templates/pages/login.html",
+		"templates/partials/hub.html",
 	)
 	if err != nil {
 		fmt.Println("error parsing templates:", err.Error())
 		os.Exit(1)
 	}
 
-	homeHandler := handler.HomeHandler(tmpl)
+	indexHandler := handler.IndexHandler(tmpl)
 
 	m := http.NewServeMux()
 	m.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	m.Handle("/", homeHandler)
+	m.Handle("/", indexHandler)
 
 	s := http.Server{
 		Addr: ":1337",

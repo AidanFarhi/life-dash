@@ -1,0 +1,19 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/hub.css">
+    <title>Life Dash</title>
+</head>
+<body>
+    <nav id="index-nav">
+    </nav>
+    <div id="main-content">
+        {{ template "hub" . }}
+    </div>
+</body>
+</html>
+{{ end }}
