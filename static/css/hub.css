@@ -1,29 +1,31 @@
 #hub-main-div {
     display: flex;
     flex-wrap: wrap;
+    padding-top: 5rem;
+    justify-content: space-evenly;
 }
 
 .hub-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 5px;
+    padding: 3rem;
+    margin-bottom: 1rem;
 }
 
-.hub-item-banner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+.hub-item:hover {
+    border: 1px solid rgba(128, 128, 128, 0.8);
+    cursor: pointer;
 }
 
-.hub-item-banner-icon {
-    width: 2rem;
-    height: 2rem;
-    aspect-ratio: 1/1;
+.hub-item-title {
+    font-size: large;
+    font-weight: bold;
 }
 
 .hub-item-image {
     width: 8rem;
     height: 8rem;
-    aspect-ratio: 1/1;
 }

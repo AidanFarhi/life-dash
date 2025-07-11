@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js" integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm" crossorigin="anonymous"></script>
+    <script defer src="static/js/index.js"></script>
     <title>Life Dash</title>
 </head>
 <body>
@@ -17,17 +19,16 @@
             <img id="dashboard-title-icon" src="static/images/dashboard-icon.png" alt="the main icon">
             <p id="dashboard-title">Life Dash</p>
         </div>
-        <hr>
         <div class="nav-div active">
-            <img class="nav-icon" src="static/images/tile-icon.png" alt="expese icon">
-            <a class="nav-link active" href="/hub">Dashboards</a>
+            <img class="nav-icon" src="static/images/tile-icon.png" alt="expense icon">
+            <a class="nav-link" href="/">Dashboards</a>
+        </div>
+        <div class="nav-div" hx-get="/expenses" hx-target="#main-content" hx-swap="innerHTML">
+            <img class="nav-icon" src="static/images/expense-icon.png" alt="expense icon">
+            <a class="nav-link">Expenses</a>
         </div>
         <div class="nav-div">
-            <img class="nav-icon" src="static/images/expense-icon.png" alt="expese icon">
-            <a class="nav-link" href="/expenses">Expenses</a>
-        </div>
-        <div class="nav-div">
-            <img class="nav-icon" src="static/images/health-icon.jpg" alt="expese icon">
+            <img class="nav-icon" src="static/images/health-icon.jpg" alt="expense icon">
             <a class="nav-link" href="/health">Health</a>
         </div>
     </nav>

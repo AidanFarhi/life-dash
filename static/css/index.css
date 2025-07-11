@@ -3,6 +3,10 @@ a {
   cursor: pointer;
 }
 
+p {
+  all: unset;
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -22,7 +26,7 @@ nav {
     grid-column-start: 1;
     grid-column-end: 3;
     border-right: 1px solid rgba(128, 128, 128, 0.3);
-    padding-top: 1rem;
+    padding-top: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -30,18 +34,14 @@ nav {
 #dashboard-title-div {
     display: flex;
     align-items: center;
-    opacity: 0.7;
+    opacity: 0.8;
+    margin-bottom: 2rem;
 }
 
 #dashboard-title-icon {
     height: 2rem;
     width: 2rem;
     padding-right: 0.75rem;
-}
-
-hr {
-    width: 100%;
-    opacity: 0.4;
 }
 
 .nav-div {
@@ -63,6 +63,7 @@ hr {
 
 .nav-div:hover {
     border: 1px solid rgba(128, 128, 128, 0.3);
+    cursor: pointer;
 }
 
 .nav-icon {
@@ -75,4 +76,18 @@ hr {
     grid-column-start: 3;
     grid-column-end: -1;
     overflow-y: scroll;
+}
+
+.main-content-title-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.main-content-title-icon {
+    height: 2rem;
+    width: 2rem;
+    padding-right: 0.75rem;
 }
