@@ -1,17 +1,78 @@
+a {
+  all: unset;
+  cursor: pointer;
+}
+
 body {
     margin: 0;
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    font-family: "Roboto";
+}
+
+#dashboard-title {
+    font-size: large;
+    font-weight: bold;
 }
 
 nav {
-    background-color: rgba(45, 45, 255, 0.695);
+    display: flex;
+    flex-direction: column;
     grid-column-start: 1;
     grid-column-end: 3;
+    border-right: 1px solid rgba(128, 128, 128, 0.3);
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+#dashboard-title-div {
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+}
+
+#dashboard-title-icon {
+    height: 2rem;
+    width: 2rem;
+    padding-right: 0.75rem;
+}
+
+hr {
+    width: 100%;
+    opacity: 0.4;
+}
+
+.nav-div {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 0.25rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    opacity: 0.7;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.nav-div.active {
+    border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.nav-div:hover {
+    border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.nav-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    padding-right: 0.5rem;
 }
 
 #main-content {
     grid-column-start: 3;
     grid-column-end: -1;
+    overflow-y: scroll;
 }

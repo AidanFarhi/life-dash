@@ -1,0 +1,29 @@
+#hub-main-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hub-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hub-item-banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.hub-item-banner-icon {
+    width: 2rem;
+    height: 2rem;
+    aspect-ratio: 1/1;
+}
+
+.hub-item-image {
+    width: 8rem;
+    height: 8rem;
+    aspect-ratio: 1/1;
+}
