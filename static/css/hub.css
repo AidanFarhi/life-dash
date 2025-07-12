@@ -13,11 +13,13 @@
     border-radius: 5px;
     padding: 3rem;
     margin-bottom: 1rem;
+    opacity: 0.7;
 }
 
 .hub-item:hover {
     border: 1px solid rgba(128, 128, 128, 0.8);
     cursor: pointer;
+    opacity: 9;
 }
 
 .hub-item-title {

@@ -7,6 +7,10 @@ p {
   all: unset;
 }
 
+div {
+    all: unset;
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -59,11 +63,13 @@ nav {
 
 .nav-div.active {
     border: 1px solid rgba(128, 128, 128, 0.3);
+    opacity: 0.9;
 }
 
 .nav-div:hover {
     border: 1px solid rgba(128, 128, 128, 0.3);
     cursor: pointer;
+    opacity: 0.9;
 }
 
 .nav-icon {
@@ -75,7 +81,7 @@ nav {
 #main-content {
     grid-column-start: 3;
     grid-column-end: -1;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .main-content-title-div {
