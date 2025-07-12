@@ -1,5 +1,6 @@
-const navDivs = document.querySelectorAll('.nav-div')
 
+// toggle active for links
+const navDivs = document.querySelectorAll('.nav-div')
 navDivs.forEach(navDiv => {
     navDiv.addEventListener('click', () => {
         navDivs.forEach(el => el.classList.remove('active'))
