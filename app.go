@@ -23,11 +23,13 @@ func main() {
 
 	indexHandler := handler.IndexHandler(tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)
+	hubHandler := handler.HubHandler(tmpl)
 
 	m := http.NewServeMux()
 	m.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	m.Handle("/", indexHandler)
 	m.Handle("GET /expenses", expenseHandler)
+	m.Handle("GET /hub", hubHandler)
 
 	s := http.Server{
 		Addr: ":1337",

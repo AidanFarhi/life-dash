@@ -19,9 +19,9 @@
             <img id="dashboard-title-icon" src="static/images/dashboard-icon.png" alt="the main icon">
             <p id="dashboard-title">Life Dash</p>
         </div>
-        <div class="nav-div active">
+        <div class="nav-div active" hx-get="/hub" hx-target="#main-content" hx-swap="innerHTML">
             <img class="nav-icon" src="static/images/tile-icon.png" alt="expense icon">
-            <a class="nav-link" href="/">Dashboards</a>
+            <a class="nav-link">Dashboards</a>
         </div>
         <div class="nav-div" hx-get="/expenses" hx-target="#main-content" hx-swap="innerHTML">
             <img class="nav-icon" src="static/images/expense-icon.png" alt="expense icon">
