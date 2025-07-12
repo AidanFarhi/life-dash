@@ -6,16 +6,24 @@ import (
 	"lifedash/handler"
 	"net/http"
 	"os"
+	"path/filepath"
 )
+
+func parseTemplates() (*template.Template, error) {
+	fileNames, err := filepath.Glob("templates/**/*.html")
+	if err != nil {
+		return nil, err
+	}
+	tmpl, err := template.ParseFiles(fileNames...)
+	if err != nil {
+		return nil, err
+	}
+	return tmpl, nil
+}
 
 func main() {
 
-	tmpl, err := template.ParseFiles(
-		"templates/pages/index.html",
-		"templates/pages/login.html",
-		"templates/views/hub.html",
-		"templates/views/expenses.html",
-	)
+	tmpl, err := parseTemplates()
 	if err != nil {
 		fmt.Println("error parsing templates:", err.Error())
 		os.Exit(1)
