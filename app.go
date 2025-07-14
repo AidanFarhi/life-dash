@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"lifedash/handler"
+	"lifedash/service"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -29,7 +30,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	indexHandler := handler.IndexHandler(tmpl)
+	authService := service.NewAuthService()
+
+	indexHandler := handler.IndexHandler(authService, tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)
 	hubHandler := handler.HubHandler(tmpl)
 
