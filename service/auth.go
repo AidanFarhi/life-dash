@@ -8,7 +8,7 @@ func NewAuthService() *AuthService {
 	return &AuthService{}
 }
 
-func (as *AuthService) ValidateSession(cookie http.Cookie) (bool, error) {
+func (as *AuthService) ValidateSession(cookie *http.Cookie) (bool, error) {
 	// handle checking the cookie using the repo
 	return true, nil
 }

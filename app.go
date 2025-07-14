@@ -32,21 +32,21 @@ func main() {
 
 	authService := service.NewAuthService()
 
-	indexHandler := handler.IndexHandler(authService, tmpl)
+	indexHandler := handler.NewIndexHandler(authService, tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)
 	hubHandler := handler.HubHandler(tmpl)
 
 	m := http.NewServeMux()
 	m.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	m.Handle("/", indexHandler)
+	m.HandleFunc("/", indexHandler.Index)
 	m.Handle("GET /expenses", expenseHandler)
 	m.Handle("GET /hub", hubHandler)
 
 	s := http.Server{
-		Addr: ":1337",
+		Addr:    ":1337",
 		Handler: m,
 	}
-	
+
 	err = s.ListenAndServe()
 	if err != nil {
 		fmt.Println("error starting server:", err.Error())
