@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"lifedash/handler"
+	"lifedash/repo"
 	"lifedash/service"
 	"net/http"
 	"os"
@@ -56,7 +57,8 @@ func main() {
 	tmpl, err := parseTemplates()
 	handleError("parsing templates", err)
 
-	authService := service.NewAuthService(db)
+	authRepo := repo.NewAuthRepo(db)
+	authService := service.NewAuthService(authRepo)
 
 	indexHandler := handler.NewIndexHandler(authService, tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)

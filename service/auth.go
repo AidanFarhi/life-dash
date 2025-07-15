@@ -1,17 +1,17 @@
 package service
 
 import (
-	"database/sql"
+	"lifedash/repo"
 	"net/http"
 )
 
 type AuthService struct {
-	db *sql.DB
+	repo *repo.AuthRepo
 }
 
-func NewAuthService(db *sql.DB) *AuthService {
+func NewAuthService(repo *repo.AuthRepo) *AuthService {
 	return &AuthService{
-		db: db,
+		repo: repo,
 	}
 }
 
