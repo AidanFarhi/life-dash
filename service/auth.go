@@ -16,6 +16,7 @@ func NewAuthService(repo *repo.AuthRepo) *AuthService {
 }
 
 func (as *AuthService) ValidateSession(cookie *http.Cookie) (bool, error) {
-	// handle checking the cookie using the repo
+	// TODO: implement me
+	//sessionExists, err := as.repo.SessionExists(cookie.Value)
 	return true, nil
 }
