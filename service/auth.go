@@ -1,11 +1,18 @@
 package service
 
-import "net/http"
+import (
+	"database/sql"
+	"net/http"
+)
 
-type AuthService struct{}
+type AuthService struct {
+	db *sql.DB
+}
 
-func NewAuthService() *AuthService {
-	return &AuthService{}
+func NewAuthService(db *sql.DB) *AuthService {
+	return &AuthService{
+		db: db,
+	}
 }
 
 func (as *AuthService) ValidateSession(cookie *http.Cookie) (bool, error) {

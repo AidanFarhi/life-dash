@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"lifedash/handler"
@@ -8,7 +9,22 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	_ "modernc.org/sqlite"
 )
+
+func getDB() (*sql.DB, error) {
+	db, err := sql.Open("sqlite", "./db/lifedash.db")
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+
+func configureDb(db *sql.DB) error {
+	_, err := db.Exec("PRAGMA foreign_keys=ON;")
+	return err
+}
 
 func parseTemplates() (*template.Template, error) {
 	fileNames, err := filepath.Glob("templates/**/*.html")
@@ -22,15 +38,25 @@ func parseTemplates() (*template.Template, error) {
 	return tmpl, nil
 }
 
-func main() {
-
-	tmpl, err := parseTemplates()
+func handleError(operation string, err error) {
 	if err != nil {
-		fmt.Println("error parsing templates:", err.Error())
+		fmt.Println("error "+operation+":", err.Error())
 		os.Exit(1)
 	}
+}
 
-	authService := service.NewAuthService()
+func main() {
+
+	db, err := getDB()
+	handleError("getting db", err)
+
+	err = configureDb(db)
+	handleError("configuring db", err)
+
+	tmpl, err := parseTemplates()
+	handleError("parsing templates", err)
+
+	authService := service.NewAuthService(db)
 
 	indexHandler := handler.NewIndexHandler(authService, tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)
@@ -48,8 +74,5 @@ func main() {
 	}
 
 	err = s.ListenAndServe()
-	if err != nil {
-		fmt.Println("error starting server:", err.Error())
-		os.Exit(1)
-	}
+	handleError("starting server", err)
 }
