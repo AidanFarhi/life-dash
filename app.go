@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"lifedash/handler"
+	"lifedash/middleware"
 	"lifedash/repo"
 	"lifedash/service"
 	"net/http"
@@ -57,24 +58,38 @@ func main() {
 	tmpl, err := parseTemplates()
 	handleError("parsing templates", err)
 
+	// init repos
 	authRepo := repo.NewAuthRepo(db)
+
+	// init services
 	authService := service.NewAuthService(authRepo)
 
-	indexHandler := handler.NewIndexHandler(authService, tmpl)
+	// init middleware
+	authMiddlWare := middleware.NewAuthMiddleware(authService)
+
+	// init handlers
+	indexHandler := handler.NewIndexHandler(tmpl)
+	loginHandler := handler.NewLoginHandler(tmpl)
 	expenseHandler := handler.ExpensesHandler(tmpl)
 	hubHandler := handler.HubHandler(tmpl)
 
-	m := http.NewServeMux()
-	m.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	m.HandleFunc("/", indexHandler.Index)
-	m.Handle("GET /expenses", expenseHandler)
-	m.Handle("GET /hub", hubHandler)
+	// create multiplexer
+	mux := http.NewServeMux()
 
+	// register handlers and apply middleware
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.Handle("/", authMiddlWare.RequireAuth(http.HandlerFunc(indexHandler.GetIndex)))
+	mux.HandleFunc("GET /login", loginHandler.GetLogin)
+	mux.Handle("GET /expenses", expenseHandler)
+	mux.Handle("GET /hub", hubHandler)
+
+	// config server
 	s := http.Server{
 		Addr:    ":1337",
-		Handler: m,
+		Handler: mux,
 	}
 
+	// start server
 	err = s.ListenAndServe()
 	handleError("starting server", err)
 }

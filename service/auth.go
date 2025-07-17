@@ -10,13 +10,13 @@ type AuthService struct {
 }
 
 func NewAuthService(repo *repo.AuthRepo) *AuthService {
-	return &AuthService{
-		repo: repo,
-	}
+	return &AuthService{repo}
 }
 
 func (as *AuthService) ValidateSession(cookie *http.Cookie) (bool, error) {
-	// TODO: implement me
-	//sessionExists, err := as.repo.SessionExists(cookie.Value)
-	return true, nil
+	sessionExists, err := as.repo.SessionExists(cookie.Value)
+	if err != nil {
+		return false, err
+	}
+	return sessionExists, nil
 }
