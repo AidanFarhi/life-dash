@@ -16,7 +16,7 @@ func NewAuthMiddleware(as *service.AuthService) *AuthMiddleware {
 	return &AuthMiddleware{as}
 }
 
-func (am *AuthMiddleware) RequireAuth(next http.Handler) http.Handler {
+func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("session_id")
 		if err == http.ErrNoCookie {
@@ -34,6 +34,6 @@ func (am *AuthMiddleware) RequireAuth(next http.Handler) http.Handler {
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
-		next.ServeHTTP(w, r)
+		next(w, r)
 	})
 }

@@ -78,7 +78,7 @@ func main() {
 
 	// register handlers and apply middleware
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	mux.Handle("/", authMiddlWare.RequireAuth(http.HandlerFunc(indexHandler.GetIndex)))
+	mux.HandleFunc("/", authMiddlWare.RequireAuth(indexHandler.GetIndex))
 	mux.HandleFunc("GET /login", loginHandler.GetLogin)
 	mux.Handle("GET /expenses", expenseHandler)
 	mux.Handle("GET /hub", hubHandler)
