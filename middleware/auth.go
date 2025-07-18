@@ -17,7 +17,7 @@ func NewAuthMiddleware(as *service.AuthService) *AuthMiddleware {
 }
 
 func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("session_id")
 		if err == http.ErrNoCookie {
 			fmt.Println("no session_id cookie found")
@@ -35,5 +35,5 @@ func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		next(w, r)
-	})
+	}
 }
