@@ -69,7 +69,7 @@ func main() {
 
 	// init handlers
 	indexHandler := handler.NewIndexHandler(tmpl)
-	loginHandler := handler.NewLoginHandler(tmpl)
+	loginHandler := handler.NewLoginHandler(tmpl, authService)
 	expenseHandler := handler.ExpensesHandler(tmpl)
 	hubHandler := handler.HubHandler(tmpl)
 
@@ -80,6 +80,7 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", authMiddlWare.RequireAuth(indexHandler.GetIndex))
 	mux.HandleFunc("GET /login", loginHandler.GetLogin)
+	mux.HandleFunc("POST /login", loginHandler.PostLogin)
 	mux.Handle("GET /expenses", expenseHandler)
 	mux.Handle("GET /hub", hubHandler)
 

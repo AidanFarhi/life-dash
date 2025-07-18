@@ -24,7 +24,7 @@ func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
-		sessionValid, err := am.as.ValidateSession(cookie)
+		sessionValid, err := am.as.ValidateSession(cookie.Value)
 		if err != nil {
 			fmt.Println("error validating session")
 			return
