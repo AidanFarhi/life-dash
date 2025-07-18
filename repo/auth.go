@@ -18,7 +18,7 @@ func NewAuthRepo(db *sql.DB) *AuthRepo {
 
 func (ar *AuthRepo) SessionExists(session_id string) (bool, error) {
 	sessionExists := false
-	query := "SELECT EXISTS(SELECT 1 FROM sessions WHERE session_id = ?)"
+	query := "SELECT EXISTS(SELECT 1 FROM session WHERE id = ?)"
 	err := ar.db.QueryRow(query, session_id).Scan(&sessionExists)
 	if err != nil {
 		return false, err
@@ -42,7 +42,7 @@ func (ar *AuthRepo) SaveSession(userId int) (string, error) {
 		return "", err
 	}
 	query := "INSERT INTO session (id, user_id) VALUES (?, ?)"
-	_, err = ar.db.Exec(query, userId, sessionId)
+	_, err = ar.db.Exec(query, sessionId, userId)
 	if err != nil {
 		return "", err
 	}

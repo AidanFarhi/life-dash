@@ -27,6 +27,7 @@ func (lh *LoginHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	loginSuccessful, sessionId, err := lh.as.Login(username, password)
+	fmt.Println("handler:", username, password, err)
 	if err != nil {
 		fmt.Println("show error page")
 		// TODO: show an error page here

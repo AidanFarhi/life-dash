@@ -2,6 +2,7 @@ package service
 
 import (
 	"database/sql"
+	"fmt"
 	"lifedash/repo"
 )
 
@@ -14,7 +15,9 @@ func NewAuthService(repo *repo.AuthRepo) *AuthService {
 }
 
 func (as *AuthService) ValidateSession(sessionId string) (bool, error) {
+	fmt.Println(sessionId)
 	sessionExists, err := as.repo.SessionExists(sessionId)
+	fmt.Println("auth service:", sessionId, err)
 	if err != nil {
 		return false, err
 	}
