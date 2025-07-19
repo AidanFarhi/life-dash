@@ -59,30 +59,30 @@ func main() {
 	handleError("parsing templates", err)
 
 	// init repos
-	authRepo := repo.NewAuthRepo(db)
+	ar := repo.NewAuthRepo(db)
 
 	// init services
-	authService := service.NewAuthService(authRepo)
+	as := service.NewAuthService(ar)
 
 	// init middleware
-	authMiddlWare := middleware.NewAuthMiddleware(authService)
+	am := middleware.NewAuthMiddleware(as)
 
 	// init handlers
-	indexHandler := handler.NewIndexHandler(tmpl)
-	loginHandler := handler.NewLoginHandler(tmpl, authService)
-	expenseHandler := handler.ExpensesHandler(tmpl)
-	hubHandler := handler.HubHandler(tmpl)
+	ih := handler.NewIndexHandler(tmpl)
+	lh := handler.NewLoginHandler(tmpl, as)
+	eh := handler.ExpensesHandler(tmpl)
+	hh := handler.HubHandler(tmpl)
 
 	// create multiplexer
 	mux := http.NewServeMux()
 
 	// register handlers and apply middleware
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	mux.HandleFunc("/", authMiddlWare.RequireAuth(indexHandler.GetIndex))
-	mux.HandleFunc("GET /login", loginHandler.GetLogin)
-	mux.HandleFunc("POST /login", loginHandler.PostLogin)
-	mux.Handle("GET /expenses", expenseHandler)
-	mux.Handle("GET /hub", hubHandler)
+	mux.HandleFunc("/", am.RequireAuth(ih.GetIndex))
+	mux.HandleFunc("GET /login", am.RedirectIfLoggedIn(lh.GetLogin))
+	mux.HandleFunc("POST /login", am.RedirectIfLoggedIn(lh.PostLogin))
+	mux.Handle("GET /expenses", eh)
+	mux.Handle("GET /hub", hh)
 
 	// config server
 	s := http.Server{
