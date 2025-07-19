@@ -1,3 +1,15 @@
 ### TODO
 
-- add logic to the auth handler to check whether user is logged in already when submitting a GET /login or POST /login.
+- logout confirmation
+
+- logout logic
+
+- logout from multiple tabs
+
+- expenses view with mock data
+
+- input form
+
+- input logic
+
+- wire up expenses view to real data from input form
