@@ -16,10 +16,10 @@ func NewAuthRepo(db *sql.DB) *AuthRepo {
 	}
 }
 
-func (ar *AuthRepo) SessionExists(session_id string) (bool, error) {
+func (ar *AuthRepo) SessionExists(sessionId string) (bool, error) {
 	sessionExists := false
 	query := "SELECT EXISTS(SELECT 1 FROM session WHERE id = ?)"
-	err := ar.db.QueryRow(query, session_id).Scan(&sessionExists)
+	err := ar.db.QueryRow(query, sessionId).Scan(&sessionExists)
 	if err != nil {
 		return false, err
 	}
@@ -47,6 +47,12 @@ func (ar *AuthRepo) SaveSession(userId int) (string, error) {
 		return "", err
 	}
 	return sessionId, nil
+}
+
+func (ar *AuthRepo) DeleteSession(sessionId string) error {
+	query := "DELETE FROM session WHERE id = ?"
+	_, err := ar.db.Exec(query, sessionId)
+	return err
 }
 
 func generateSessionId() (string, error) {

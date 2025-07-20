@@ -2,6 +2,7 @@ package service
 
 import (
 	"database/sql"
+	"errors"
 	"lifedash/repo"
 )
 
@@ -34,4 +35,19 @@ func (as *AuthService) Login(username, password string) (bool, string, error) {
 		return false, "", err
 	}
 	return true, sessionId, nil
+}
+
+func (as *AuthService) Logout(sessionId string) error {
+	sessionExists, err := as.ValidateSession(sessionId)
+	if err != nil {
+		return err
+	}
+	if !sessionExists {
+		return errors.New("session not found")
+	}
+	err = as.repo.DeleteSession(sessionId)
+	if err != nil {
+		return err
+	}
+	return nil
 }

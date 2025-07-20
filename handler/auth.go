@@ -6,23 +6,23 @@ import (
 	"net/http"
 )
 
-type LoginHandler struct {
+type AuthenticationHandler struct {
 	t  *template.Template
 	as *service.AuthService
 }
 
-func NewLoginHandler(t *template.Template, as *service.AuthService) *LoginHandler {
-	return &LoginHandler{
+func NewAuthenticationHandler(t *template.Template, as *service.AuthService) *AuthenticationHandler {
+	return &AuthenticationHandler{
 		t:  t,
 		as: as,
 	}
 }
 
-func (lh *LoginHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
+func (lh *AuthenticationHandler) GetLogin(w http.ResponseWriter, r *http.Request) {
 	lh.t.ExecuteTemplate(w, "login", nil)
 }
 
-func (lh *LoginHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
+func (lh *AuthenticationHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	loginSuccessful, sessionId, err := lh.as.Login(username, password)
@@ -45,5 +45,19 @@ func (lh *LoginHandler) PostLogin(w http.ResponseWriter, r *http.Request) {
 		// Expires:  time.Now().Add(24 * time.Hour),
 	}
 	http.SetCookie(w, cookie)
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func (lh *AuthenticationHandler) PostLogout(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		http.Error(w, "error getting session cookie", http.StatusInternalServerError)
+		return
+	}
+	err = lh.as.Logout(cookie.Value)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	http.Redirect(w, r, "/", http.StatusFound)
 }
