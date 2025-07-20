@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"database/sql"
 	"encoding/hex"
-	"fmt"
 )
 
 type AuthRepo struct {
@@ -53,7 +52,6 @@ func (ar *AuthRepo) SaveSession(userId int) (string, error) {
 func (ar *AuthRepo) DeleteSession(sessionId string) error {
 	query := "DELETE FROM session WHERE id = ?"
 	_, err := ar.db.Exec(query, sessionId)
-	fmt.Println(err)
 	return err
 }
 

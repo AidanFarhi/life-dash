@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"lifedash/service"
 	"net/http"
 )
@@ -20,7 +19,6 @@ func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("session_id")
 		if err == http.ErrNoCookie {
-			fmt.Println("no session_id cookie found")
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
@@ -31,7 +29,6 @@ func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		if !sessionValid {
-			fmt.Println("session not valid")
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
