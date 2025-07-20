@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"html/template"
 	"lifedash/service"
 	"net/http"
@@ -50,14 +51,20 @@ func (lh *AuthenticationHandler) PostLogin(w http.ResponseWriter, r *http.Reques
 
 func (lh *AuthenticationHandler) PostLogout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
-	if err != nil {
-		http.Error(w, "error getting session cookie", http.StatusInternalServerError)
-		return
+	if err == nil {
+		if err := lh.as.Logout(cookie.Value); err != nil {
+			fmt.Println("logout error:", err)
+		}
+		expiredCookie := &http.Cookie{
+			Name:     "session_id",
+			Value:    "",
+			Path:     "/",
+			MaxAge:   -1,
+			HttpOnly: true,
+			Secure:   true,
+			SameSite: http.SameSiteStrictMode,
+		}
+		http.SetCookie(w, expiredCookie)
 	}
-	err = lh.as.Logout(cookie.Value)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, "/", http.StatusFound)
+	w.Header().Set("HX-Redirect", "/login")
 }

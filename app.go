@@ -81,6 +81,7 @@ func main() {
 	mux.HandleFunc("/", am.RequireAuth(ih.GetIndex))
 	mux.HandleFunc("GET /login", am.RedirectIfLoggedIn(ah.GetLogin))
 	mux.HandleFunc("POST /login", am.RedirectIfLoggedIn(ah.PostLogin))
+	mux.HandleFunc("POST /logout", ah.PostLogout)
 	mux.Handle("GET /expenses", eh)
 	mux.Handle("GET /hub", hh)
 
