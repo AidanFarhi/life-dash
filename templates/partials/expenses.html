@@ -3,13 +3,17 @@
     <img class="main-content-title-icon" src="static/images/expense-icon.png" alt="the main icon">
     <h3>Expenses</h3>
 </div>
-<div id="hub-main-div">
-    <div class="hub-item">
-        <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
-        <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
-
-        <!-- <script type="module" src="dimensions.js"></script> -->
-        <script type="module" src="static/js/acquisitions.js"></script>
+<div id="expense-main-container">
+    <div id="total-spent-container">
+        <p id="total-spent-amount">$5324.11</p>
+        <p id="total-spent-title">Total Expenses</p>
     </div>
+    <div id="expense-bar-chart-container">
+        <canvas id="expenses"></canvas>
+    </div>
+    <div id="expense-table">
+        <p>I'm the expense table</p>
+    </div>
+    <script src="/static/js/expenses.js"></script>
 </div>
 {{ end }}
