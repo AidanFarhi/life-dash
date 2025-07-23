@@ -13,11 +13,12 @@
   ];
 
   new Chart(
-    document.getElementById('expenses'),
+    document.getElementById('expenses-canvas'),
     {
       type: 'bar',
       options: {
         animation: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: false
@@ -28,13 +29,19 @@
         },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            grid: {
+              display: false
+            }
           },
           x: {
             ticks: {
               font: {
                 size: 20
               }
+            },
+            grid: {
+              display: false
             }
           }
         }

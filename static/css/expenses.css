@@ -2,7 +2,7 @@
     height: calc(94vh - 2px);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 1.25fr;
 }
 
 #total-spent-container {
@@ -13,6 +13,7 @@
     margin: 2rem;
     border: 1px solid rgba(128, 128, 128, 0.3);
     border-radius: 5px;
+    grid-row: 1/2;
 }
 
 #total-spent-amount {
@@ -26,6 +27,7 @@
 }
 
 #expense-bar-chart-container {
+    grid-row: 1/2;
     grid-column: 2/4;
     display: flex;
     align-items: center;
