@@ -1,6 +1,8 @@
 ### TODO
 
-- expenses view with mock data
+- insert some mock data into the db
+
+- read the data from the db
 
 - input form
 

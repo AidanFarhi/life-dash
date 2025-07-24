@@ -14,3 +14,14 @@ CREATE TABLE session (
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
+
+DROP TABLE IF EXISTS expense;
+
+CREATE TABLE expense (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    date TEXT NOT NULL,
+    category TEXT NOT NULL,
+    amount REAL NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
