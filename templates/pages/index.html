@@ -22,27 +22,39 @@
             <img id="dashboard-title-icon" src="static/images/dashboard-icon.png" alt="the main icon">
             <p id="dashboard-title">Life Dash</p>
         </div>
-        <div class="nav-div active" hx-get="/hub" hx-target="#main-content" hx-swap="innerHTML">
+        <div 
+            class="nav-div active"
+            id="hub"
+            hx-get="/hub" 
+            hx-target="#main-content" 
+            hx-swap="innerHTML">
             <img class="nav-icon" src="static/images/tile-icon.png" alt="expense icon">
             <a class="nav-link">Dashboards</a>
         </div>
         <div 
-            class="nav-div" 
+            class="nav-div"
+            id="expenses"
             hx-get="/expenses" 
             hx-target="#main-content" 
             hx-swap="innerHTML">
             <img class="nav-icon" src="static/images/expense-icon.png" alt="expense icon">
             <a class="nav-link">Expenses</a>
         </div>
-        <div class="nav-div">
+        <div 
+            class="nav-div"
+            id="health">
             <img class="nav-icon" src="static/images/health-icon.jpg" alt="expense icon">
             <a class="nav-link">Health</a>
         </div>
-        <div class="nav-div">
+        <div 
+            class="nav-div"
+            id="exercise">
             <img class="nav-icon" src="static/images/exercise-icon.png" alt="expense icon">
             <a class="nav-link">Exercise</a>
         </div>
-        <div class="nav-div">
+        <div 
+            class="nav-div"
+            id="diet">
             <img class="nav-icon" src="static/images/diet-icon.png" alt="expense icon">
             <a class="nav-link">Diet</a>
         </div>
