@@ -12,7 +12,7 @@
     { category: '📦', count: 120 }
   ];
 
-  const resp = await fetch('/expenseData')
+  const resp = await fetch('/api/expenses')
   const jsonData = await resp.json()
   console.log(jsonData)
 
