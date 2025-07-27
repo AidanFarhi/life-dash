@@ -14,10 +14,10 @@ func NewAuthService(repo *repo.AuthRepo) *AuthService {
 	return &AuthService{repo}
 }
 
-func (as *AuthService) ValidateSession(sessionId string) (bool, error) {
-	sessionExists, err := as.repo.SessionExists(sessionId)
+func (as *AuthService) ValidateSession(sessionId string) (int, error) {
+	sessionExists, err := as.repo.GetUserIdFromSession(sessionId)
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 	return sessionExists, nil
 }
@@ -38,11 +38,11 @@ func (as *AuthService) Login(username, password string) (bool, string, error) {
 }
 
 func (as *AuthService) Logout(sessionId string) error {
-	sessionExists, err := as.ValidateSession(sessionId)
+	userId, err := as.ValidateSession(sessionId)
 	if err != nil {
 		return err
 	}
-	if !sessionExists {
+	if userId == 0 {
 		return errors.New("session not found")
 	}
 	err = as.repo.DeleteSession(sessionId)

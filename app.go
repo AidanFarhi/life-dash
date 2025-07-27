@@ -60,9 +60,11 @@ func main() {
 
 	// init repos
 	ar := repo.NewAuthRepo(db)
+	er := repo.NewExpenseRepo(db)
 
 	// init services
 	as := service.NewAuthService(ar)
+	es := service.NewExpenseService(er)
 
 	// init middleware
 	am := middleware.NewAuthMiddleware(as)
@@ -70,7 +72,7 @@ func main() {
 	// init handlers
 	ih := handler.NewIndexHandler(tmpl)
 	ah := handler.NewAuthenticationHandler(tmpl, as)
-	eh := handler.ExpensesHandler(tmpl)
+	eh := handler.NewExpenseHandler(tmpl, es)
 	hh := handler.HubHandler(tmpl)
 
 	// create multiplexer
@@ -82,7 +84,8 @@ func main() {
 	mux.HandleFunc("GET /login", am.RedirectIfLoggedIn(ah.GetLogin))
 	mux.HandleFunc("POST /login", am.RedirectIfLoggedIn(ah.PostLogin))
 	mux.HandleFunc("POST /logout", ah.PostLogout)
-	mux.HandleFunc("GET /expenses", am.RequireAuth(eh))
+	mux.HandleFunc("GET /expenses", am.RequireAuth(eh.GetExpenses))
+	mux.HandleFunc("GET /expenseData", am.RequireAuth(eh.GetExpensesJSON))
 	mux.Handle("GET /hub", hh)
 
 	// config server

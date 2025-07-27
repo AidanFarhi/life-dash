@@ -1,11 +1,14 @@
 package middleware
 
 import (
+	"context"
 	"lifedash/service"
 	"net/http"
 )
 
 // TODO: create an actual logger
+
+const userIdKey = "userId"
 
 type AuthMiddleware struct {
 	as *service.AuthService
@@ -22,17 +25,18 @@ func (am *AuthMiddleware) RequireAuth(next http.HandlerFunc) http.HandlerFunc {
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
-		sessionValid, err := am.as.ValidateSession(cookie.Value)
+		userId, err := am.as.ValidateSession(cookie.Value)
 		if err != nil {
 			// TODO: custom error page
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if !sessionValid {
+		if userId == 0 {
 			http.Redirect(w, r, "/login", http.StatusFound)
 			return
 		}
-		next(w, r)
+		ctx := context.WithValue(r.Context(), userIdKey, userId)
+		next(w, r.WithContext(ctx))
 	}
 }
 
@@ -40,13 +44,13 @@ func (am *AuthMiddleware) RedirectIfLoggedIn(next http.HandlerFunc) http.Handler
 	return func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("session_id")
 		if err == nil {
-			sessionExists, err := am.as.ValidateSession(cookie.Value)
+			userId, err := am.as.ValidateSession(cookie.Value)
 			if err != nil {
 				// TODO: custom error page
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-			if sessionExists {
+			if userId == 0 {
 				http.Redirect(w, r, "/", http.StatusFound)
 				return
 			}

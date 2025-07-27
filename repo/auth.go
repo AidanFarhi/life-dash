@@ -11,9 +11,7 @@ type AuthRepo struct {
 }
 
 func NewAuthRepo(db *sql.DB) *AuthRepo {
-	return &AuthRepo{
-		db: db,
-	}
+	return &AuthRepo{db}
 }
 
 func (ar *AuthRepo) SessionExists(sessionId string) (bool, error) {
@@ -24,6 +22,16 @@ func (ar *AuthRepo) SessionExists(sessionId string) (bool, error) {
 		return false, err
 	}
 	return sessionExists, nil
+}
+
+func (ar *AuthRepo) GetUserIdFromSession(sessionId string) (int, error) {
+	userId := 0
+	query := "SELECT user_id FROM session WHERE id = ?"
+	err := ar.db.QueryRow(query, sessionId).Scan(&userId)
+	if err != nil {
+		return 0, err
+	}
+	return userId, nil
 }
 
 func (ar *AuthRepo) Login(username, password string) (int, error) {

@@ -12,6 +12,10 @@
     { category: '📦', count: 120 }
   ];
 
+  const resp = await fetch('/expenseData')
+  const jsonData = await resp.json()
+  console.log(jsonData)
+
   new Chart(
     document.getElementById('expenses-canvas'),
     {
