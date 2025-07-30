@@ -22,64 +22,14 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- {{ range . }}
-                    <tr>
-                        <td>{{ .TimeStamp }}</td>
-                        <td>{{ .Category }}</td>
-                        <td>${{ .Amount }}</td>
-                        </td>
-                    </tr>
-                {{ end }} -->
+            {{ range . }}
                 <tr>
-                    <td>2025-01-01</td>
-                    <td>🍎</td>
-                    <td>$132.22</td>
+                    <td>{{ .Date }}</td>
+                    <td>{{ .Category }}</td>
+                    <td>${{ .Amount }}</td>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2025-01-05</td>
-                    <td>🚗</td>
-                    <td>$450.75</td>
-                </tr>
-                <tr>
-                    <td>2025-01-10</td>
-                    <td>🐾</td>
-                    <td>$67.89</td>
-                </tr>
-                <tr>
-                    <td>2025-01-12</td>
-                    <td>🏠</td>
-                    <td>$1,230.00</td>
-                </tr>
-                <tr>
-                    <td>2025-01-15</td>
-                    <td>🎬</td>
-                    <td>$45.99</td>
-                </tr>
-                <tr>
-                    <td>2025-01-18</td>
-                    <td>🏥</td>
-                    <td>$320.45</td>
-                </tr>
-                <tr>
-                    <td>2025-01-20</td>
-                    <td>💡</td>
-                    <td>$87.30</td>
-                </tr>
-                <tr>
-                    <td>2025-01-22</td>
-                    <td>📚</td>
-                    <td>$25.50</td>
-                </tr>
-                <tr>
-                    <td>2025-01-25</td>
-                    <td>👕</td>
-                    <td>$78.15</td>
-                </tr>
-                <tr>
-                    <td>2025-01-28</td>
-                    <td>📦</td>
-                    <td>$150.00</td>
-                </tr>
+            {{ end }}
             </tbody>
         </table>
     </div>

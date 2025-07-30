@@ -20,3 +20,11 @@ func (es *ExpenseService) GetAggregatedExpensesForUser(userId int) ([]model.Aggr
 	}
 	return expenseDistribution, nil
 }
+
+func (es *ExpenseService) GetAllExpensesForUser(userId int) ([]model.Expense, error) {
+	allExpenses, err := es.repo.GetAllExpensesForUser(userId)
+	if err != nil {
+		return nil, err
+	}
+	return allExpenses, nil
+}

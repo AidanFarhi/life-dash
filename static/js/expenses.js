@@ -50,8 +50,15 @@ const renderBarChart = async (canvas, chartData) => {
     new Chart(canvas, chartConfig)
 }
 
-export const fetchDataAndRenderBarChart = async () => {
+const fetchDataAndRenderBarChart = async () => {
     const canvas = document.getElementById('expenses-canvas')
     const data = await fetchExpenseDistributionData()
-    await renderBarChart(canvas, data)
+    const dataSortedByAmountDesc = data.sort((a, b) => b.amount - a.amount)
+    await renderBarChart(canvas, dataSortedByAmountDesc)
 }
+
+document.body.addEventListener('htmx:afterSwap', event => {
+    if (event.detail.pathInfo.requestPath === '/expenses') {
+        fetchDataAndRenderBarChart()
+    }
+})
