@@ -21,13 +21,13 @@ func NewExpenseHandler(t *template.Template, es *service.ExpenseService) *Expens
 	}
 }
 
-func (eh *ExpenseHandler) GetExpensesJSON(w http.ResponseWriter, r *http.Request) {
+func (eh *ExpenseHandler) GetAggregatedExpensesJSON(w http.ResponseWriter, r *http.Request) {
 	userId, ok := r.Context().Value(userIdKey).(int)
 	if !ok || userId == 0 {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
-	expenses, err := eh.es.GetExpensesForUser(userId)
+	expenses, err := eh.es.GetAggregatedExpensesForUser(userId)
 	if err != nil {
 		http.Error(w, "error getting expenses", http.StatusInternalServerError)
 		return

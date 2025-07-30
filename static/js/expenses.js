@@ -1,63 +1,57 @@
-(async function() {
-  const data = [
-    { category: '🍎', count: 450 },
-    { category: '🐾', count: 320 },
-    { category: '🚗', count: 210 },
-    { category: '🏠', count: 980 },
-    { category: '🎬', count: 275 },
-    { category: '🏥', count: 430 },
-    { category: '💡', count: 360 },
-    { category: '📚', count: 150 },
-    { category: '👕', count: 190 },
-    { category: '📦', count: 120 }
-  ];
 
-  const resp = await fetch('/api/expenses')
-  const jsonData = await resp.json()
-  console.log(jsonData)
+const fetchExpenseDistributionData = async () => {
+    const resp = await fetch('/api/aggregatedExpenses')
+    const jsonData = await resp.json()
+    return jsonData
+}
 
-  new Chart(
-    document.getElementById('expenses-canvas'),
-    {
-      type: 'bar',
-      options: {
-        animation: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            enabled: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: false
-            }
-          },
-          x: {
-            ticks: {
-              font: {
-                size: 20
-              }
+const renderBarChart = async (canvas, chartData) => {
+    let chartConfig = {
+        type: 'bar',
+        options: {
+            animation: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
             },
-            grid: {
-              display: false
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 20
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
             }
-          }
+        },
+        data: {
+            labels: chartData.map(row => row.category),
+            datasets: [
+                {
+                    data: chartData.map(row => row.amount)
+                }
+            ]
         }
-      },
-      data: {
-        labels: data.map(row => row.category),
-        datasets: [
-          {
-            data: data.map(row => row.count)
-          }
-        ]
-      }
     }
-  );
-})();
+    new Chart(canvas, chartConfig)
+}
+
+export const fetchDataAndRenderBarChart = async () => {
+    const canvas = document.getElementById('expenses-canvas')
+    const data = await fetchExpenseDistributionData()
+    await renderBarChart(canvas, data)
+}

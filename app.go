@@ -85,7 +85,7 @@ func main() {
 	mux.HandleFunc("POST /login", am.RedirectIfLoggedIn(ah.PostLogin))
 	mux.HandleFunc("POST /logout", ah.PostLogout)
 	mux.HandleFunc("GET /expenses", am.RequireAuth(eh.GetExpenses))
-	mux.HandleFunc("GET /api/expenses", am.RequireAuth(eh.GetExpensesJSON))
+	mux.HandleFunc("GET /api/aggregatedExpenses", am.RequireAuth(eh.GetAggregatedExpensesJSON))
 	mux.Handle("GET /hub", hh)
 
 	// config server
