@@ -1,13 +1,9 @@
 ### TODO
 
-- insert some mock data into the db
+- move logout to top right
 
-- read the data from the db
+- add icon to bottom of navbar
 
 - input form
 
 - input logic
-
-- wire up expenses view to real data from input form
-
-- logout from multiple tabs

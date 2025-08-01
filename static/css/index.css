@@ -79,21 +79,6 @@ nav {
     padding-right: 0.5rem;
 }
 
-#logout-icon {
-    height: 2.5rem;
-    width: 2.5rem;
-    margin-top: auto;
-    margin-bottom: 1rem;
-    align-self: center;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.1s ease;
-}
-
-#logout-icon:hover {
-    opacity: 1;
-}
-
 #main-content {
     grid-column-start: 3;
     grid-column-end: -1;
@@ -113,4 +98,18 @@ nav {
     height: 2rem;
     width: 2rem;
     padding-right: 0.75rem;
+}
+
+#logout-icon {
+    position: absolute;
+    margin-left: 78vw;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.1s ease;
+}
+
+#logout-icon:hover {
+    opacity: 1;
 }
